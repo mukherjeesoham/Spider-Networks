@@ -1,0 +1,4 @@
+==> This directory contains all the raw data exported in terms of CSV files from Microsoft Excel.
+    This Frame-ID wise spider who-follows-whom data is parsed by the Python scripts to generate the association matrices.
+
+==> Most recent and complete dataset : SNA_04_02_2017 
