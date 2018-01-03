@@ -44,7 +44,6 @@ def association_index_attacker(M, N, D):
 		if M not in ID_T and N in ID_T:
 			Y_B  += 1.0
 
-	# See the minor project report for the explanation for calculating the association index.
-	AI = X / (X + Y_AB + Y_A + Y_B)
-
+		# See the minor project report for the explanation for calculating the association index.
+		AI = X / (X + Y_AB + Y_A + Y_B)
 	return AI

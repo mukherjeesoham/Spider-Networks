@@ -11,7 +11,6 @@ import pandas as pd
 import os
 
 import SNA_compute_ADJ_matrix as AM
-import SNA_metrics as SM
 
 def read(sheet_ID, PARSE='Attacker'):
 
@@ -61,6 +60,12 @@ def read(sheet_ID, PARSE='Attacker'):
 		B = np.repeat(A, C)
 
 		REC_DATA = np.vstack((B, ID_A, CF_R))
+		
+		# XXX: Consider max 22 trials in all frames [Removing F10]
+		SREC_DATA = REC_DATA.T
+		SREC_DATA = SREC_DATA[SREC_DATA[:, 0] < 23]
+		REC_DATA  = SREC_DATA.T
+	
 		DATAFRAME = pd.DataFrame({'D0: Trial':REC_DATA[0],'D1: Attackers':REC_DATA[1],'D2: Retreat':REC_DATA[2]})
 
 		if not os.path.exists('../../output/csv/sequence'):
@@ -119,7 +124,7 @@ def read(sheet_ID, PARSE='Attacker'):
 
 		# Generate the comer adjacency matrix from the parsed data.
 		AM.generate_comer_matrix(REC_DATA, FRAME_ID)
-		
+
 	else:
 		print "Do not know which data to parse. Aborting."
 		return None

@@ -12,7 +12,7 @@ import glob
 import os
 import SNA_parse_csv as RD
 
-path = '../../datasets/SNA_04_02_2017/F_ID_*.csv'
+path = '../../datasets/Final/SNA/F_ID_*.csv'
 file_list = glob.glob(path)
 
 print "\n==> SNA_master: Starting to parse data from CSV file."
@@ -22,7 +22,7 @@ for file in file_list:
 
 	# Parse attacker and comer data.
 	RD.read(file, PARSE='Attacker')
-	RD.read(file, PARSE='Comer')
+	# RD.read(file, PARSE='Comer')
 
 print 80*'-'
 print 'Parse complete. All done!'
