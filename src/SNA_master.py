@@ -1,28 +1,34 @@
 #==============================================================================
 # SM 2/2016
-# Master file to execute all pre-processing of the data. The pipeline includes
-# 	1. Reads CSV data for the spider social network trials. [sna_parse_csv]
-# 	2. generates the adjacency matrix for every dataset. [sna_association_index]
-# 	3. Computes rank. [sna_rank]
-# 	4. Checks for consistency measures. [sna_rank]
+# Master file to execute all pre-processing of the data.
 #==============================================================================
 
 import numpy as np
 import glob
 import os
 import SNA_parse_csv as RD
+import SNA_compute_ADJ_matrix as ADJ
 
-path = '../../datasets/Final/SNA/F_ID_*.csv'
+#------------------------------------------------------------------------------
+# Parse network data into CSV files
+#------------------------------------------------------------------------------
+path = '../datasets/csv/08-02-2018-15T/F_ID_*.csv'
 file_list = glob.glob(path)
 
-print "\n==> SNA_master: Starting to parse data from CSV file."
+print 80*("-")
+print "==> SNA_master: Starting to parse data from CSV file."
 for file in file_list:
-	print 80*'-'
-	print "Loading file on path: %s" %file
-
-	# Parse attacker and comer data.
 	RD.read(file, PARSE='Attacker')
-	# RD.read(file, PARSE='Comer')
 
+#------------------------------------------------------------------------------
+# Generate adjacency matrices
+#------------------------------------------------------------------------------
+
+path = '../output/csv/sequence/A_F*.csv'
+file_list = glob.glob(path)
+
+print 80*("-")
+print "==> SNA_master: Starting to generate adjacency matrix from CSV file."
+for file in file_list:
+	ADJ.generate_attacker_matrix(file)
 print 80*'-'
-print 'Parse complete. All done!'
