@@ -30,6 +30,6 @@ def generate_random_attacker_matrix(path, N):
         for k in range(0, 40):
     	    for l in range(0, 40):
     		    ADJ[k][l] = ed.association_index_attacker(k+1, l+1, REC_RDATA)
-        np.savetxt('../output/csv/ADJ/random/%s_R%r.csv' %(FRAME_ID, rindex+1000), ADJ, fmt='%.4f', delimiter=',')
+        np.savetxt('../output/csv/ADJ/random/%s_R%r.csv' %(FRAME_ID, rindex+10000), ADJ, fmt='%.4f', delimiter=',')
         print "Generated randomized adjacency matrix for %s configuration %r" %(FRAME_ID, rindex)
     return None
