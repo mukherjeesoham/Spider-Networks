@@ -44,5 +44,5 @@ print 80*'-'
 print "==> SNA_master: Starting to generate adjacency matrix from CSV file."
 print 80*("-")
 for file in file_list:
-	RADJ.generate_random_attacker_matrix(file, 120)
+	RADJ.generate_random_attacker_matrix(file, 2)
 print 80*'-'

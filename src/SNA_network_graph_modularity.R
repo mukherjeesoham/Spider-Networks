@@ -17,13 +17,23 @@ gc()
 
 generate_GRAPH <- function(file, ID)
 {
-	ADJ   <- as.matrix(read.csv(file, header=F))
-	GRAPH <- graph.adjacency(ADJ, mode="directed", weight=TRUE)
+    DMAT  <- as.matrix(read.csv(file, header=F))
+	ADJ   <- (DMAT + t(DMAT))/2
+	GRAPH <- graph.adjacency(ADJ, mode="undirected", weight=TRUE)
 	GRAPH <- simplify(GRAPH, remove.multiple = F, remove.loops = TRUE)
 	GRAPH <- set_vertex_attr(GRAPH, "RETREAT", value=rep(c('gray8','gray87'), each=20))
 
 	cat("\nWokring on file:", file)
 	GRAPH  <- delete.vertices(GRAPH, degree(GRAPH)==0)		# delete isolates
+}
+
+
+compute_modularity<- function(GRAPH)
+{
+
+     COMMUNITY  <- edge.betweenness.community(GRAPH, weights = E(GRAPH)$weight, 
+                    directed = FALSE, edge.betweenness = TRUE, modularity = TRUE, membership = TRUE)
+     MODULARITY <- modularity(COMMUNITY)
 }
 
 #=================================================================
@@ -41,14 +51,14 @@ for (i in 1:length(file.names))
 {	
 	file    <- sprintf('../output/csv/ADJ/%s', file.names[i])
 	GRAPH   <- generate_GRAPH(file, file.names[i])
-	MODULARITY <- modularity(GRAPH, weights = E(GRAPH)$weight)  
+	MODULARITY <- compute_modularity(GRAPH)  
 
 	LDN  <- c(LDN, MODULARITY)
 	LID  <- c(LID, gsub(".csv", "", file.names[i]))
 }	
 
 ADENSITY <- cbind(LID, LDN)
-colnames(ADENSITY) <- c("FRAME ID", "DENSITY")
+colnames(ADENSITY) <- c("FRAME ID", "MODULARITY")
 write.table(ADENSITY, file = sprintf('../output/metrics/modularity.csv'), sep=",", row.names=FALSE)
 cat("\n")
 
@@ -62,13 +72,13 @@ for (i in 1:length(file.names))
 {	
 	file    <- sprintf('../output/csv/ADJ/random/%s', file.names[i])
 	GRAPH   <- generate_GRAPH(file, file.names[i])
-	MODULARITY <- modularity(GRAPH, weights = E(GRAPH)$weight)  
+	MODULARITY <- compute_modularity(GRAPH) 
 
 	LDN  <- c(LDN, MODULARITY)
 	LID  <- c(LID, gsub(".csv", "", file.names[i]))
 }	
 
 ADENSITY <- cbind(LID, LDN)
-colnames(ADENSITY) <- c("FRAME ID", "DENSITY")
+colnames(ADENSITY) <- c("FRAME ID", "MODULARITY")
 write.table(ADENSITY, file = sprintf('../output/metrics/modularity_random.csv'), sep=",", row.names=FALSE)
 cat("\n")
