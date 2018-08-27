@@ -9,13 +9,14 @@ import os
 import itertools
 import SNA_compute_AI as ed
 import pandas as pd
+import SNA_parse_deadspiders as RDS
 
-def scramble_dataset(REC_DATA):
+def scramble_dataset(REC_DATA, FRAME_ID):
     stream = REC_DATA.T
     trial  = np.unique(stream[:, 0])
     batch  = np.array([])
     for t in trial:
-        batch = np.hstack((batch, np.random.choice(40, len(stream[stream[:,0] == t]), replace=False).T + 1))
+        batch = np.hstack((batch, np.random.choice(RDS.deletedeadspiders(FRAME_ID), len(stream[stream[:,0] == t]), replace=False).T + 1))
     stream[:, 1] = batch
     return stream.T
 
@@ -25,7 +26,7 @@ def generate_random_attacker_matrix(path, N):
     if not os.path.exists('../output/csv/ADJ/random'):
     	os.makedirs('../output/csv/ADJ/random')
     for rindex in range(N):
-        REC_RDATA = scramble_dataset(REC_DATA)
+        REC_RDATA = scramble_dataset(REC_DATA, FRAME_ID)
         ADJ = np.zeros((40, 40))
         for k in range(0, 40):
     	    for l in range(0, 40):
