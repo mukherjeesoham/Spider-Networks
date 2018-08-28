@@ -16,8 +16,8 @@ import SNA_generate_random_datasets as RADJ
 path = '../datasets/csv/08-02-2018-15T/F_ID_*.csv'
 file_list = glob.glob(path)
 
-print 80*("-")
-print "==> SNA_master: Starting to parse data from CSV file."
+print(80*("-"))
+print("==> SNA_master: Starting to parse data from CSV file.")
 for file in file_list:
 	RD.read(file, PARSE='Attacker')
 
@@ -28,8 +28,9 @@ for file in file_list:
 path = '../output/csv/sequence/A_F*.csv'
 file_list = glob.glob(path)
 
-print 80*("-")
-print "==> SNA_master: Starting to generate adjacency matrix from CSV file."
+print(80*("-"))
+print("==> SNA_master: Starting to generate adjacency matrix from CSV file.")
+print(80*("-"))
 for file in file_list:
 	ADJ.generate_attacker_matrix(file)
 
@@ -40,9 +41,9 @@ for file in file_list:
 path = '../output/csv/sequence/A_F*.csv'
 file_list = glob.glob(path)
 
-print 80*'-'
-print "==> SNA_master: Starting to generate adjacency matrix from CSV file."
-print 80*("-")
+print(80*("-"))
+print("==> SNA_master: Starting to generate random adjacency matrix from CSV file.")
+print(80*("-"))
 for file in file_list:
 	RADJ.generate_random_attacker_matrix(file, 1000)
-print 80*'-'
+print(80*("-"))
