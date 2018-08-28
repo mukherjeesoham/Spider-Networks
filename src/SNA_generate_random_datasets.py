@@ -13,6 +13,7 @@ import SNA_parse_deadspiders as RDS
 
 def scramble_dataset(REC_DATA, FRAME_ID):
     stream = REC_DATA.T
+    FRAME_ID = int(FRAME_ID[-2:])
     trial  = np.unique(stream[:, 0])
     batch  = np.array([])
     for t in trial:
