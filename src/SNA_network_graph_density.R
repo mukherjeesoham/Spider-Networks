@@ -8,11 +8,6 @@
 #============================================================================
 
 library(igraph)
-library(viridis)
-library(gplots)
-library(ggplot2)
-library(reshape2)
-library(car)
 
 rm(list = ls())
 gc()
